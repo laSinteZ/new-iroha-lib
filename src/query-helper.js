@@ -4,6 +4,8 @@ import each from 'lodash/each'
 import { Signature } from './proto/primitive_pb'
 import * as Queries from './proto/queries_pb'
 
+const emptyQuery = () => new Queries.Query()
+
 /**
  * Returns payload from the query or a new one
  * @param {Object} query
@@ -89,5 +91,6 @@ const sign = (query, privateKeyHex) => {
 export default {
   sign,
   addMeta,
-  addQuery
+  addQuery,
+  emptyQuery
 }
