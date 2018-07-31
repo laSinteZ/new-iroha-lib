@@ -4,6 +4,7 @@ import each from 'lodash/each'
 import * as Commands from './proto/commands_pb'
 import { Signature } from './proto/primitive_pb'
 import Transaction from './proto/transaction_pb'
+import { sha3_256 } from 'js-sha3'
 
 const emptyTransaction = () => new Transaction.Transaction()
 
@@ -49,23 +50,31 @@ const addMeta = (transaction, { creatorAccountId, createdTime = Date.now(), quor
   let payload = getOrCreatePayload(transaction)
   let reducedPayload = getOrCreateReducedPayload(payload)
 
+  reducedPayload.setCreatorAccountId(creatorAccountId)
   reducedPayload.setCreatedTime(createdTime)
-  reducedPayload.setCreatedTime(createdTime)
-  reducedPayload.setCreatedTime(createdTime)
+  reducedPayload.setQuorum(quorum)
 
   payload.setReducedPayload(reducedPayload)
 
   let transactionWithMeta = cloneDeep(transaction)
   transactionWithMeta.setPayload(payload)
+
   return transactionWithMeta
 }
 
+/**
+ * Returns new transaction with one more signature
+ * @param {Object} transaction base transaction
+ * @param {String} privateKeyHex - private key of query's creator in hex.
+ */
+
 const sign = (transaction, privateKeyHex) => {
-  const payload = getOrCreatePayload(transaction)
-  const privateKey = Buffer.from(privateKeyHex, 'hex')
+  const privateKey = hexStringToByte(privateKeyHex)
   const publicKey = derivePublicKey(privateKey)
 
-  const signatory = signTransaction(Buffer.from(payload.serializeBinary()), privateKey, publicKey)
+  const payloadHash = sha3_256.array(transaction.payload.serializeBinary())
+
+  const signatory = signTransaction(payloadHash, publicKey, privateKey)
 
   let s = new Signature()
   s.setPubkey(publicKey)
@@ -82,4 +91,17 @@ export default {
   addMeta,
   sign,
   emptyTransaction
+}
+
+function hexStringToByte (str) {
+  if (!str) {
+    return new Uint8Array()
+  }
+
+  var a = []
+  for (var i = 0, len = str.length; i < len; i += 2) {
+    a.push(parseInt(str.substr(i, 2), 16))
+  }
+
+  return new Uint8Array(a)
 }

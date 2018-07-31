@@ -13,9 +13,11 @@
     "webpack-cli": "^3.1.0"
   },
   "dependencies": {
-    "ed25519.js": "^1.1.0",
+    "ed25519.js": "^2.0.0",
     "google-protobuf": "^3.6.0",
     "grpc-web-client": "^0.6.2",
+    "iroha-lib": "^0.1.8",
+    "js-sha3": "^0.7.0",
     "lodash": "^4.17.10"
   }
 }

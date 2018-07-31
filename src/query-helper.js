@@ -3,6 +3,7 @@ import cloneDeep from 'lodash/cloneDeep'
 import each from 'lodash/each'
 import { Signature } from './proto/primitive_pb'
 import * as Queries from './proto/queries_pb'
+import { sha3_256 } from 'js-sha3'
 
 const emptyQuery = () => new Queries.Query()
 
@@ -72,11 +73,12 @@ const addMeta = (query, { creatorAccountId, createdTime = Date.now(), queryCount
  */
 
 const sign = (query, privateKeyHex) => {
-  const payload = query.getPayload()
-  const privateKey = Buffer.from(privateKeyHex, 'hex')
+  const privateKey = hexStringToByte(privateKeyHex)
   const publicKey = derivePublicKey(privateKey)
 
-  const signatory = signQuery(Buffer.from(payload.serializeBinary()), privateKey, publicKey)
+  const payloadHash = sha3_256.array(query.payload.serializeBinary())
+
+  const signatory = signQuery(payloadHash, publicKey, privateKey)
 
   let s = new Signature()
   s.setPubkey(publicKey)
@@ -93,4 +95,17 @@ export default {
   addMeta,
   addQuery,
   emptyQuery
+}
+
+function hexStringToByte (str) {
+  if (!str) {
+    return new Uint8Array()
+  }
+
+  var a = []
+  for (var i = 0, len = str.length; i < len; i += 2) {
+    a.push(parseInt(str.substr(i, 2), 16))
+  }
+
+  return new Uint8Array(a)
 }
