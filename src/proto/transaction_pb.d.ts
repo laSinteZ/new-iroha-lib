@@ -64,12 +64,12 @@ export namespace Transaction {
       getType(): Transaction.Payload.BatchMeta.BatchType;
       setType(value: Transaction.Payload.BatchMeta.BatchType): void;
 
-      clearTxHashesList(): void;
-      getTxHashesList(): Array<Uint8Array | string>;
-      getTxHashesList_asU8(): Array<Uint8Array>;
-      getTxHashesList_asB64(): Array<string>;
-      setTxHashesList(value: Array<Uint8Array | string>): void;
-      addTxHashes(value: Uint8Array | string, index?: number): Uint8Array | string;
+      clearReducedHashesList(): void;
+      getReducedHashesList(): Array<Uint8Array | string>;
+      getReducedHashesList_asU8(): Array<Uint8Array>;
+      getReducedHashesList_asB64(): Array<string>;
+      setReducedHashesList(value: Array<Uint8Array | string>): void;
+      addReducedHashes(value: Uint8Array | string, index?: number): Uint8Array | string;
 
       serializeBinary(): Uint8Array;
       toObject(includeInstance?: boolean): BatchMeta.AsObject;
@@ -84,7 +84,7 @@ export namespace Transaction {
     export namespace BatchMeta {
       export type AsObject = {
         type: Transaction.Payload.BatchMeta.BatchType,
-        txHashesList: Array<Uint8Array | string>,
+        reducedHashesList: Array<Uint8Array | string>,
       }
 
       export enum BatchType {

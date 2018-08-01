@@ -392,7 +392,7 @@ proto.iroha.protocol.Transaction.Payload.BatchMeta.prototype.toObject = function
 proto.iroha.protocol.Transaction.Payload.BatchMeta.toObject = function(includeInstance, msg) {
   var f, obj = {
     type: jspb.Message.getFieldWithDefault(msg, 1, 0),
-    txHashesList: msg.getTxHashesList_asB64()
+    reducedHashesList: msg.getReducedHashesList_asB64()
   };
 
   if (includeInstance) {
@@ -435,7 +435,7 @@ proto.iroha.protocol.Transaction.Payload.BatchMeta.deserializeBinaryFromReader =
       break;
     case 2:
       var value = /** @type {!Uint8Array} */ (reader.readBytes());
-      msg.addTxHashes(value);
+      msg.addReducedHashes(value);
       break;
     default:
       reader.skipField();
@@ -473,7 +473,7 @@ proto.iroha.protocol.Transaction.Payload.BatchMeta.serializeBinaryToWriter = fun
       f
     );
   }
-  f = message.getTxHashesList_asU8();
+  f = message.getReducedHashesList_asU8();
   if (f.length > 0) {
     writer.writeRepeatedBytes(
       2,
@@ -507,40 +507,40 @@ proto.iroha.protocol.Transaction.Payload.BatchMeta.prototype.setType = function(
 
 
 /**
- * repeated bytes tx_hashes = 2;
+ * repeated bytes reduced_hashes = 2;
  * @return {!(Array<!Uint8Array>|Array<string>)}
  */
-proto.iroha.protocol.Transaction.Payload.BatchMeta.prototype.getTxHashesList = function() {
+proto.iroha.protocol.Transaction.Payload.BatchMeta.prototype.getReducedHashesList = function() {
   return /** @type {!(Array<!Uint8Array>|Array<string>)} */ (jspb.Message.getRepeatedField(this, 2));
 };
 
 
 /**
- * repeated bytes tx_hashes = 2;
- * This is a type-conversion wrapper around `getTxHashesList()`
+ * repeated bytes reduced_hashes = 2;
+ * This is a type-conversion wrapper around `getReducedHashesList()`
  * @return {!Array.<string>}
  */
-proto.iroha.protocol.Transaction.Payload.BatchMeta.prototype.getTxHashesList_asB64 = function() {
+proto.iroha.protocol.Transaction.Payload.BatchMeta.prototype.getReducedHashesList_asB64 = function() {
   return /** @type {!Array.<string>} */ (jspb.Message.bytesListAsB64(
-      this.getTxHashesList()));
+      this.getReducedHashesList()));
 };
 
 
 /**
- * repeated bytes tx_hashes = 2;
+ * repeated bytes reduced_hashes = 2;
  * Note that Uint8Array is not supported on all browsers.
  * @see http://caniuse.com/Uint8Array
- * This is a type-conversion wrapper around `getTxHashesList()`
+ * This is a type-conversion wrapper around `getReducedHashesList()`
  * @return {!Array.<!Uint8Array>}
  */
-proto.iroha.protocol.Transaction.Payload.BatchMeta.prototype.getTxHashesList_asU8 = function() {
+proto.iroha.protocol.Transaction.Payload.BatchMeta.prototype.getReducedHashesList_asU8 = function() {
   return /** @type {!Array.<!Uint8Array>} */ (jspb.Message.bytesListAsU8(
-      this.getTxHashesList()));
+      this.getReducedHashesList()));
 };
 
 
 /** @param {!(Array<!Uint8Array>|Array<string>)} value */
-proto.iroha.protocol.Transaction.Payload.BatchMeta.prototype.setTxHashesList = function(value) {
+proto.iroha.protocol.Transaction.Payload.BatchMeta.prototype.setReducedHashesList = function(value) {
   jspb.Message.setField(this, 2, value || []);
 };
 
@@ -549,13 +549,13 @@ proto.iroha.protocol.Transaction.Payload.BatchMeta.prototype.setTxHashesList = f
  * @param {!(string|Uint8Array)} value
  * @param {number=} opt_index
  */
-proto.iroha.protocol.Transaction.Payload.BatchMeta.prototype.addTxHashes = function(value, opt_index) {
+proto.iroha.protocol.Transaction.Payload.BatchMeta.prototype.addReducedHashes = function(value, opt_index) {
   jspb.Message.addToRepeatedField(this, 2, value, opt_index);
 };
 
 
-proto.iroha.protocol.Transaction.Payload.BatchMeta.prototype.clearTxHashesList = function() {
-  this.setTxHashesList([]);
+proto.iroha.protocol.Transaction.Payload.BatchMeta.prototype.clearReducedHashesList = function() {
+  this.setReducedHashesList([]);
 };
 
 

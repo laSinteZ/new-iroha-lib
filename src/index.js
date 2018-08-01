@@ -40,35 +40,35 @@ var transaction = _.flow(
 
 console.log(transaction.getSignaturesList())
 
-// var query = _.flow(
-//   (q) => queryHelper.addQuery(q, 'getAccount', { accountId: 'test@notary' }),
-//   (q) => queryHelper.addMeta(q, { creatorAccountId: 'test@notary' }),
-//   (q) => queryHelper.sign(q, adminPriv)
-// )(queryHelper.emptyQuery())
+var query = _.flow(
+  (q) => queryHelper.addQuery(q, 'getAccount', { accountId: 'test@notary' }),
+  (q) => queryHelper.addMeta(q, { creatorAccountId: 'test@notary' }),
+  (q) => queryHelper.sign(q, adminPriv)
+)(queryHelper.emptyQuery())
 
-// const queryClient = new QueryServiceClient(
+const queryClient = new QueryServiceClient(
+  'http://95.179.153.222:8081'
+)
+
+queryClient.find(query, (err, response) => {
+  console.log(JSON.stringify(response))
+})
+
+// const txClient = new CommandServiceClient(
 //   'http://localhost:8081'
 // )
 
-// queryClient.find(query, (err, response) => {
-//   console.log(JSON.stringify(response))
-// })
-
-const txClient = new CommandServiceClient(
-  'http://localhost:8081'
-)
-
-var p = new Promise((resolve, reject) => {
-  console.log('Submit transaction...')
-  txClient.torii(transaction, (err, data) => {
-    if (err) {
-      reject(err)
-    } else {
-      console.log('Submitted transaction successfully')
-      resolve()
-    }
-  })
-}).then(console.log('kek')).catch(err => console.log(err))
+// var p = new Promise((resolve, reject) => {
+//   console.log('Submit transaction...')
+//   txClient.torii(transaction, (err, data) => {
+//     if (err) {
+//       reject(err)
+//     } else {
+//       console.log('Submitted transaction successfully')
+//       resolve()
+//     }
+//   })
+// }).then(console.log('kek')).catch(err => console.log(err))
 
 function blob2array (blob) {
   var bytearray = new Uint8Array(blob.size())
